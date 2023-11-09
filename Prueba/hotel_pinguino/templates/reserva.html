@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles/principal.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark fixed-top">
+        <div class="container p-3">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'home' %}"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'reserva_main' %}" target="_blank"><strong>Reservas</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="{% url 'habitaciones' %}"><strong>Habitaciones</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="{% url 'nosotros' %}"><strong>Sobre Nosotros</strong></a>
+                    </li>
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <strong>Cuenta</strong>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'login_cliente' %}">Cliente</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'login_admin' %}" target="_blank">Staff</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'registro' %}" target="_blank">Registrarse</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br><br>
+    <br><br>
+    <br><br>
+
+    <div class="container-fluid text-center">
+        <h5 class="display-5">Seleccionar Fechas</h5>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form action="/registrar_reserva/" method="POST">{% csrf_token %}
+                <strong>Seleccionar fecha de CHECK-IN:</strong>
+                <div class="form-group">
+                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" value="{{reserva.fecha_ingreso}}" class="form-control" placeholder="Fecha de Ingreso" required>
+                </div><br><br>
+                <strong>Seleccionar fecha de CHECK-OUT:</strong>
+                <div class="form-group">
+                    <input type="date" id="fecha_salida" name="fecha_salida" value="{{reserva.fecha_salida}}" class="form-control" placeholder="Fecha de Salida" required>
+                </div>
+
+                <br><br><br><br>
+                <div class="container-fluid text-center">
+                    <h5 class="display-6">Seleccionar Cantidad de Adultos y Niños</h5>
+                </div><br>
+                <strong>Adultos:</strong>
+                <div class="form-group">
+                    <input type="number" id="adultos" name="adultos" value="{{reserva.adultos}}" class="form-control" placeholder="Adultos" required>
+                </div><br><br>
+                <strong>Niños:</strong>
+                <div class="form-group">
+                    <input type="number" id="niños" name="niños" value="{{reserva.niños}}" class="form-control" placeholder="Niños" required>
+                </div><br><br>
+                <div class="container-fluid text-center">
+                    <h5 class="display-6">Habitaciones</h5>
+                </div>
+                <div class="container my-5">
+                    <div class="row">
+                        {% for habitacion in habitacion %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{ habitacion.imagen.url }}" class="card-img-top" alt="{{ habitacion.descripcion }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Habitación {{ habitacion.nombre }}</h5>
+                                        <p class="card-text">{{ habitacion.descripcion }}</p>
+                                        <p>Precio: ${{ habitacion.precio }}</p>
+                                        <button class="btn btn-primary agregar-btn" data-habitacion-id="{{ habitacion.hab_id }}">Agregar a la Reserva</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                
+                <form id="reserva-form" method="POST" action="{% url 'realizar_reserva' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit" value="Confirmar Reserva"><a style="text-decoration: none;" class="text-white" href="{% url 'procesar_formulario' %}">Confirmar Reserva</a></button>
+                    
+                </form>
+                
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const agregarButtons = document.querySelectorAll(".agregar-btn");
+    const reservaForm = document.getElementById("reserva-form");
+    const habitacionesSeleccionadas = {};  // Objeto para almacenar las habitaciones seleccionadas
+
+    agregarButtons.forEach(button => {
+        button.addEventListener("click", function(event) {
+            const habitacionId = event.target.getAttribute("data-habitacion-id");
+            
+            // Verifica si la habitación ya ha sido agregada a la reserva
+            if (habitacionesSeleccionadas[habitacionId]) {
+                habitacionesSeleccionadas[habitacionId]++;
+            } else {
+                habitacionesSeleccionadas[habitacionId] = 1;
+            }
+            
+            // Actualiza el formulario con las habitaciones seleccionadas
+            reservaForm.innerHTML = "";
+            for (const id in habitacionesSeleccionadas) {
+                const cantidad = habitacionesSeleccionadas[id];
+                reservaForm.innerHTML += `<input type="hidden" name="habitacion_${id}" value="${cantidad}">`;
+            }
+        });
+    });
+});
+        </script>
+
+        
+        
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Servicios {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Servicio</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/editar_servicio/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="id_serv" name="id_serv" value="{{servicio.id_serv}}" class="form-control" placeholder="Id Servicio"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombre_serv" name="nombre_serv" value="{{servicio.nombre_serv}}" class="form-control" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="descripcion" name="descripcion" value="{{servicio.descripcion}}" class="form-control" placeholder="Descripcion" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="precio_servicio" name="precio_servicio" value="{{servicio.precio_servicio}}" class="form-control" placeholder="Precio" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

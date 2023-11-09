@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Habitaciones {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Gestión de Habitacion</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrar_habitacion/" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="hab_id" name="hab_id" value="{{habitacion.hab_id}}" class="form-control" placeholder="Id habitacion"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombre" name="nombre" value="{{habitacion.nombre}}" class="form-control" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" id="imagen" name="imagen" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="max_personas" name="max_personas" value="{{habitacion.max_personas}}" class="form-control" placeholder="Maximo Personas" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="tamaño" name="tamaño" value="{{habitacion.tamaño}}" class="form-control" placeholder="Tamaño" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="descripcion" name="descripcion" value="{{habitacion.descripcion}}" class="form-control" placeholder="Descripcion" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="estado" name="estado" value="{{habitacion.estado}}" class="form-control" placeholder="Estado" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="precio" name="precio" value="{{habitacion.precio}}" class="form-control" placeholder="Precio" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Habitaciones</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id Habitacion</th>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Máximo huéspedes</th>
+                        <th>Tamaño habitación</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Precio</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for h in habitaciones %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{h.hab_id}}</td>
+                        <td>{{h.nombre}}</td>
+                        <td>{{h.imagen}}</td>
+                        <td>{{h.max_personas}}</td>
+                        <td>{{h.tamaño}}</td>
+                        <td>{{h.descripcion}}</td>
+                        <td>{{h.estado}}</td>
+                        <td>{{h.precio}}</td>
+                        <td><a href="{% url 'edicion_habitacion' hab_id=h.hab_id %}" class="btn btn-info">Editar</a></td>
+                        <td><a href="{% url 'eliminar_habitacion' hab_id=h.hab_id %}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

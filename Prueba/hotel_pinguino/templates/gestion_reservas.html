@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Reservas {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Gestión de Reserva</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrar_reserva/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="id_reserva" name="id_reserva" value="{{reserva.id_reserva}}" class="form-control" placeholder="Id Reserva"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="fecha_ingreso" name="fecha_ingreso" value="{{reserva.fecha_ingreso}}" class="form-control" placeholder="Fecha de Ingreso" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="fecha_salida" name="fecha_salida" value="{{reserva.fecha_salida}}" class="form-control" placeholder="Fecha de Salida" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="adultos" name="adultos" value="{{reserva.adultos}}" class="form-control" placeholder="Adultos" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="niños" name="niños" value="{{reserva.niños}}" class="form-control" placeholder="Niños" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Reservas</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id Reserva</th>
+                        <th>Fecha de Ingreso</th>
+                        <th>Fecha de Salida</th>
+                        <th>Adultos</th>
+                        <th>Niños</th>
+                        <th>Precio</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reservas %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{r.id_reserva}}</td>
+                        <td>{{r.fecha_ingreso}}</td>
+                        <td>{{r.fecha_salida}}</td>
+                        <td>{{r.adultos}}</td>
+                        <td>{{r.niños}}</td>
+                        <td>{{r.precio}}</td>
+                        <td><a href="{% url 'edicion_reserva' id_reserva=r.id_reserva %}" class="btn btn-info">Editar</a></td>
+                        <td><a href="{% url 'eliminar_reserva' id_reserva=r.id_reserva %}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Habitaciones {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Habitacion</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/editar_habitacion/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="hab_id" name="hab_id" value="{{habitacion.hab_id}}" class="form-control" placeholder="Id habitacion"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="nombre" name="nombre" value="{{habitacion.nombre}}" class="form-control" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" id="imagen" name="imagen" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="max_personas" name="max_personas" value="{{habitacion.max_personas}}" class="form-control" placeholder="Maximo Personas" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="tamaño" name="tamaño" value="{{habitacion.tamaño}}" class="form-control" placeholder="Tamaño Habitacion" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="descripcion" name="descripcion" value="{{habitacion.descripcion}}" class="form-control" placeholder="Descripcion" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="estado" name="estado" value="{{habitacion.estado}}" class="form-control"  placeholder="Estado" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="precio" name="precio" value="{{habitacion.precio}}" class="form-control" placeholder="Precio" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Pinguino</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{% static 'scripts/carrusel.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/principal.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark fixed-top">
+        <div class="container p-3">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'vista_cliente' %}"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="#"><strong>Reservas</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="{% url 'vista_habitaciones_cliente' %}"><strong>Habitaciones</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="#"><strong>Promociones y Ofertas</strong></a>
+                    </li>
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <strong>Cuenta</strong>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                {% if request.session.email %}
+                                {{ request.session.email }} &nbsp;&nbsp; <a class="dropdown-item" href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+                                {% else %}
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <a class="dropdown-item" href="#">Mis Reservas</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br><br>
+    <div>
+        <div id="slider-hotel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button class="active" data-bs-target="#slider-hotel" data-bs-slide-to="0"></button>
+                <button data-bs-target="#slider-hotel" data-bs-slide-to="1"></button>
+                <button data-bs-target="#slider-hotel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner carousel-fade">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{% static 'images/hotel.jpg' %}" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static 'images/habitacion.jpg' %}" alt="">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static 'images/casino.jpg' %}" alt="">
+                </div>
+            </div>
+            <button class="carousel-control-prev" data-bs-target="#slider-hotel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" data-bs-target="#slider-hotel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light pt-5 pb-4">
+        <div class="container text-center text-md-start">
+            <div class="row text-center text-md-start">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">¡VISÍTENOS!</h5>
+                    <hr class="mb-4">
+                    <p>
+                        Av. Libertador Bernardo O'Higgins 1449, local 15 torre 4, Santiago, Región Metropolitana
+                    </p>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Contacto</h5>
+                    <hr class="mb-4">
+                    <p>
+                        <li class="fas fa-home me-3">Chile</li>
+                    </p>
+                    <p>
+                        <li class="fas fa-envelope me-3">Santiago: +56 2 6835-7656</li>
+                    </p>                   
+                </div>
+                <hr class="mb-4">
+    
+                <div class="text-center mb-2">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">NUESTRAS REDES SOCIALES</h5>
+                </div>
+                <div class="text-center">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.facebook.com" class="text-light"><i class="bi bi-facebook"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://twitter.com" class="text-light"><i class="bi bi-twitter"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.youtube.com" class="text-light"><i class="bi bi-youtube"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.instagram.com" class="text-light"><i class="bi bi-instagram"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.pinterest.cl" class="text-light"><i class="bi bi-pinterest"></i></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

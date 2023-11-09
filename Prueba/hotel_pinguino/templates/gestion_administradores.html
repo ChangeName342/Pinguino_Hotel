@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Administradores {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Gestión de Administrador</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrar_administrador/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="admin_id" name="admin_id" value="{{administrador.admin_id}}" class="form-control" placeholder="Id Admin"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="contraseña" name="contraseña" value="{{administrador.contraseña}}" class="form-control" placeholder="Contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" value="{{administrador.email}}" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Administradores</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Id Admin</th>
+                        <th>Contraseña</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in administradores %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{a.admin_id}}</td>
+                        <td>{{a.contraseña}}</td>
+                        <td>{{a.email}}</td>
+                        <td>{{a.rol}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

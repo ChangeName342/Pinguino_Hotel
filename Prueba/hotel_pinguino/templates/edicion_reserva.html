@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} Gestión de Reservas {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edición de Reservas</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/editar_reserva/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" id="id_reserva" name="id_reserva" value="{{reserva.id_reserva}}" class="form-control" placeholder="Id Reserva"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="fecha_ingreso" name="fecha_ingreso" value="{{reserva.fecha_ingreso}}" class="form-control" placeholder="Fecha de Ingreso" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" id="fecha_salida" name="fecha_salida" value="{{reserva.fecha_salida}}" class="form-control" placeholder="Fecha de Salida" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="adultos" name="adultos" value="{{reserva.adultos}}" class="form-control" placeholder="Adultos" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="niños" name="niños" value="{{reserva.niños}}" class="form-control" placeholder="Niños" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

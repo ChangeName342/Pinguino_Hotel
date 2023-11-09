@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles/principal.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark fixed-top">
+        <div class="container p-3">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="{% url 'home' %}"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active text-white" aria-current="page" href="#" target="_blank"><strong>Reservas</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="{% url 'habitaciones' %}"><strong>Habitaciones</strong></a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-white" href="{% url 'nosotros' %}"><strong>Sobre Nosotros</strong></a>
+                    </li>
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <strong>Cuenta</strong>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'login_cliente' %}">Cliente</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'login_admin' %}" target="_blank">Staff</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'registro' %}" target="_blank">Registrarse</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="card col-sm-4 p-3" style="background-color: #f0f0f0; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="text-center mb-4">
+                <h4 class="display-6">Inicio de Sesión</h4>
+            </div>
+            <form class="needs-validation" method="post" action="{% url 'login_cliente' %}" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope-at-fill"></i></span>
+                            <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
+                            <div class="valid-feedback">Email Válido</div>
+                            <div class="invalid-feedback">Es necesario poner un email válido</div>
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key"></i></span>
+                        <input class="form-control" type="password" name="contraseña" id="contraseña" placeholder="Contraseña" required>
+                        <div class="valid-feedback">Contraseña Válida</div>
+                        <div class="invalid-feedback">Contraseña incorrecta</div>
+                    </div>
+                </div>
+                <div class="text-center mb-3">
+                    <button type="submit" class="btn btn-success" style="background-color: #007BFF; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Iniciar Sesión</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-light pt-5 pb-4">
+        <div class="container text-center text-md-start">
+            <div class="row text-center text-md-start">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">¡VISÍTENOS!</h5>
+                    <hr class="mb-4">
+                    <p>
+                        Av. Libertador Bernardo O'Higgins 1449, local 15 torre 4, Santiago, Región Metropolitana
+                    </p>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">Contacto</h5>
+                    <hr class="mb-4">
+                    <p>
+                        <li class="fas fa-home me-3">Chile</li>
+                    </p>
+                    <p>
+                        <li class="fas fa-envelope me-3">Santiago: +56 2 6835-7656</li>
+                    </p>                   
+                </div>
+                <hr class="mb-4">
+    
+                <div class="text-center mb-2">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-danger">NUESTRAS REDES SOCIALES</h5>
+                </div>
+                <div class="text-center">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.facebook.com" class="text-light"><i class="bi bi-facebook"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://twitter.com" class="text-light"><i class="bi bi-twitter"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.youtube.com" class="text-light"><i class="bi bi-youtube"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.instagram.com" class="text-light"><i class="bi bi-instagram"></i></a> 
+                        </li>
+                        <li class="list-inline-item">
+                            <a target="_blank" href="https://www.pinterest.cl" class="text-light"><i class="bi bi-pinterest"></i></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
